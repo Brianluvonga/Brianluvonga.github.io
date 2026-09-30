@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NCEMIS Phase I – UI Design</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f3f5f4;--card:#fff;--ink:#14231c;--mut:#5d6b64;--line:#dde4e0;--pri:#0f6b4a;--pri2:#e3f2ec;--warn:#b7791f;--warn2:#fdf3dc;--bad:#b42318;--bad2:#fde8e6;--ok:#157f3b;--ok2:#e2f5e8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1714;--card:#17221d;--ink:#e6efe9;--mut:#93a39a;--line:#26352d;--pri:#3ecf94;--pri2:#173a2b;--warn:#e6b450;--warn2:#3a2f14;--bad:#ff8a7d;--bad2:#3d1d19;--ok:#5fd68a;--ok2:#163524}}
+:root[data-theme="dark"]{--bg:#0f1714;--card:#17221d;--ink:#e6efe9;--mut:#93a39a;--line:#26352d;--pri:#3ecf94;--pri2:#173a2b;--warn:#e6b450;--warn2:#3a2f14;--bad:#ff8a7d;--bad2:#3d1d19;--ok:#5fd68a;--ok2:#163524}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;cursor:pointer}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.logo{font-weight:700;color:var(--pri);margin-right:6px}
+.seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:2px;overflow-x:auto;max-width:100%}
+.seg button{border:0;background:none;color:var(--mut);padding:6px 11px;border-radius:8px;white-space:nowrap}
+.seg button.on{background:var(--pri);color:#fff}
+.sp{flex:1}
+.wrap{padding:16px;max-width:1200px;margin:0 auto}
+.app{display:grid;grid-template-columns:210px 1fr;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-height:560px}
+.side{background:var(--pri2);padding:14px 10px;border-right:1px solid var(--line)}
+.side h4{margin:4px 8px 10px;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+.side button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--ink);padding:9px 10px;border-radius:8px;margin-bottom:2px}
+.side button.on{background:var(--pri);color:#fff}
+.main{padding:18px;min-width:0}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.bar h2{margin:0;font-size:19px;flex:1}
+.chip{font-size:12px;padding:3px 9px;border-radius:99px;background:var(--pri2);color:var(--pri);white-space:nowrap}
+.chip.w{background:var(--warn2);color:var(--warn)}.chip.b{background:var(--bad2);color:var(--bad)}.chip.o{background:var(--ok2);color:var(--ok)}
+.grid{display:grid;gap:12px}.k4{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}.k2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--card)}
+.card h3{margin:0 0 10px;font-size:14px}
+.kpi b{display:block;font-size:26px}.kpi span{color:var(--mut);font-size:12px}
+.row{display:flex;align-items:center;gap:8px;margin:8px 0}.row>span:first-child{width:96px;color:var(--mut);font-size:12px}
+.track{flex:1;height:10px;background:var(--bg);border-radius:9px;overflow:hidden}.track i{display:block;height:100%;background:var(--pri)}
+.al{display:flex;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}.al:first-of-type{border-top:0}.al div{flex:1}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 11px;border-radius:8px}
+.btn.p{background:var(--pri);border-color:var(--pri);color:#fff}.btn.d{color:var(--bad)}.btn[disabled]{opacity:.45;cursor:not-allowed}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--mut);font-weight:500;font-size:12px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;font-size:12px;color:var(--mut)}.in{display:block;width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.steps{display:flex;gap:6px;margin-bottom:14px}.steps span{flex:1;padding:6px;text-align:center;font-size:12px;border-radius:8px;background:var(--bg);color:var(--mut)}.steps .on{background:var(--pri);color:#fff}
+.note{font-size:12px;color:var(--mut);margin-top:12px}
+.mob{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start}
+.phone{width:340px;max-width:100%;border:8px solid #1b2622;border-radius:34px;background:var(--card);overflow:hidden;display:flex;flex-direction:column;height:640px}
+.ph{background:var(--pri);color:#fff;padding:14px 16px}.ph small{opacity:.85}
+.pb{flex:1;overflow:auto;padding:14px}
+.nav{display:flex;border-top:1px solid var(--line)}.nav button{flex:1;border:0;background:none;padding:11px 4px;color:var(--mut);font-size:12px}.nav .on{color:var(--pri);font-weight:700}
+.tap{border:2px dashed var(--pri);border-radius:16px;padding:22px;text-align:center;color:var(--pri);background:var(--pri2);margin-bottom:12px}
+.tap b{display:block;font-size:17px}
+.big{width:100%;padding:13px;border-radius:12px;border:0;background:var(--pri);color:#fff;font-weight:600;margin-top:8px}
+.li{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.sz{display:flex;gap:8px}.sz button{flex:1;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}.sz .on{background:var(--pri);color:#fff}
+.lbl{max-width:560px;margin:0 auto 14px;text-align:center;color:var(--mut)}
+@media(max-width:700px){.app{grid-template-columns:1fr}.side{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}.side h4{display:none}.side button{width:auto;white-space:nowrap}}
+</style></head><body>
+<div class="top"><span class="logo">NCEMIS</span>
+<div class="seg" id="roles"></div><span class="sp"></span>
+<div class="seg" id="dev"><button data-d="d" class="on">Desktop</button><button data-d="m">Mobile</button></div></div>
+<div class="wrap" id="root"></div>
+<script>
+const R={
+teacher:{n:'Teacher / Centre head',u:'Grace M.',s:'Sunrise ECDE',nav:[['register','Register learner'],['learners','Learners'],['milk','Milk & uniform'],['reports','Centre reports']],m:[['att','Attendance'],['milk','Milk'],['uni','Uniform'],['sync','Sync']],exp:0},
+sub:{n:'Sub-county officer',u:'J. Kamau',s:'Sub-county C',nav:[['dash','Dashboard'],['verify','Verification'],['reports','Reports']],m:[['alerts','Alerts'],['verify','Verify'],['centres','Centres']],exp:0},
+county:{n:'County education officer',u:'A. Wekesa',s:'Whole county',nav:[['dash','Dashboard'],['verify','Verification'],['register','Registration'],['staff','Teachers & tutors'],['reports','Reports & export'],['audit','Audit log']],m:[['alerts','Alerts'],['verify','Verify'],['centres','Centres']],exp:1},
+exec:{n:'Executive',u:'Dr. N. Rotich',s:'Read-only',nav:[['dash','Overview'],['reports','Reports']],m:[['dash','Overview'],['centres','Centres']],exp:0},
+admin:{n:'System admin',u:'IT Admin',s:'Accounts & devices',nav:[['users','Users & roles'],['devices','Devices'],['audit','Audit log']],m:[['devices','Devices'],['users','Users']],exp:0}};
+let role='teacher',dev='d',scr={},mt={};
+const $=s=>document.querySelector(s);
+const chip=(t,c='')=>`<span class="chip ${c}">${t}</span>`;
+const kpi=(n,l)=>`<div class="card kpi"><b>${n}</b><span>${l}</span></div>`;
+const bars=(a)=>a.map(([l,v])=>`<div class="row"><span>${l}</span><div class="track"><i style="width:${v}%;${v<75?'background:var(--warn)':''}"></i></div><b>${v}%</b></div>`).join('');
+const al=(t,c,b,act)=>`<div class="al">${chip(b,c)}<div>${t}</div>${act?`<button class="btn">${act}</button>`:''}</div>`;
+const tbl=(h,r)=>`<div class="tw"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</table></div>`;
+const head=(t,x='')=>`<div class="bar"><h2>${t}</h2>${x}</div>`;
+const D={
+dash:()=>{const c=R[role];const scope=role==='sub'?'Sub-county C':'County';return head('Overview',chip(scope)+chip('Sample data','w'))+
+`<div class="grid k4">${kpi('12,480','Learners registered')}${kpi('86%','Attendance today')}${kpi('94%','Milk issued vs delivered')}${kpi('61%','Uniforms issued')}</div>
+<div class="grid k2" style="margin-top:12px"><div class="card"><h3>Attendance by ${role==='sub'?'centre':'sub-county'}</h3>${bars(role==='sub'?[['Sunrise',92],['Sunset',88],['Kijani',71],['Tumaini',64]]:[['Sub-county A',88],['Sub-county B',81],['Sub-county C',69]])}</div>
+<div class="card"><h3>Alerts ${role==='exec'?'':'(exceptions)'}</h3>${al('Centre X: no sync for 3 days','w','Sync',R[role].exp||role==='sub'?'Follow up':'')}${al('Centre Y: milk stock-out','b','Urgent',role==='exec'?'':'Dispatch')}${al('210 records awaiting verification','','Pending',role==='exec'?'':'Open')}</div></div>
+<div class="card" style="margin-top:12px"><h3>Uniform issue vs beneficiaries</h3>${bars([['Size S',72],['Size M',58],['Size L',43]])}</div>`},
+verify:()=>head('Verification queue',chip('210 pending','w'))+tbl(['Learner','Centre','Guardian phone','Duplicate check','Action'],[['Amina Wanjiru','Sunrise ECDE','07XX XXX XXX',chip('No match','o'),'<button class="btn p">Approve</button> <button class="btn d">Return</button>'],['Brian Kiprop','Sunset ECDE','07XX XXX XXX',chip('Possible match','w'),'<button class="btn">Merge</button> <button class="btn d">Reject</button>'],['Faith Achieng','Kijani ECDE','Missing',chip('No match','o'),'<button class="btn p" disabled>Approve</button> <button class="btn d">Return</button>']])+`<p class="note">Approval issues the learner ID and unlocks wristband or QR card assignment.</p>`,
+register:()=>head('Register learner',chip('Draft'))+`<div class="steps"><span>1 Learner</span><span class="on">2 Guardian &amp; consent</span><span>3 Centre</span><span>4 Review</span></div>
+<div class="f"><label>Learner full name<input class="in" value="Amina Wanjiru"></label><label>Date of birth<input class="in" value="14 / 03 / 2022"></label><label>Guardian name<input class="in" value="Grace Wanjiru"></label><label>Guardian phone (required for SMS)<input class="in" placeholder="07XX XXX XXX"></label><label>Guardian ID<input class="in" placeholder="XXXXXXXX"></label><label>Special needs (optional)<input class="in" value="None"></label></div>
+<p><label style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" checked> Guardian consents to use of the child's data for education services.</label></p>
+<div class="bar">${chip('Duplicate check: no match','o')}<span class="sp" style="flex:1"></span><button class="btn">Save draft</button><button class="btn p">Submit for verification</button></div>`,
+learners:()=>head('Learners · Sunrise ECDE',chip('24 enrolled'))+`<input class="in" placeholder="Search by name or ID" style="max-width:320px;margin-bottom:12px">`+tbl(['Name','Class','Tag','Status'],[['Amina Wanjiru','Baby class','NFC',chip('Active','o')],['Brian Kiprop','Baby class','QR',chip('Active','o')],['Faith Achieng','PP1','None',chip('Awaiting tag','w')]]),
+milk:()=>head('Milk & uniform · Sunrise ECDE',chip('Synced','o'))+`<div class="grid k4">${kpi('24 L','Delivered today')}${kpi('21 / 24','Learners served')}${kpi('3 L','Stock left')}${kpi('12','Size S in stock')}</div><div class="card" style="margin-top:12px"><h3>Day report</h3>${al('Tomorrow\'s stock is low','w','Low','Report short delivery')}${al('Uniform receipt sign-off pending','','Pending','Confirm receipt')}</div>`,
+reports:()=>head('Reports',chip(R[role].exp?'Export enabled':'Export restricted',R[role].exp?'o':''))+tbl(['Report','Audience','Frequency',''],[['Attendance by centre and sub-county','Officers, executive','Daily'],['Registration status','Officers','Daily'],['Milk delivered vs served','Officers, executive','Weekly'],['Uniform issued vs beneficiaries','Officers, executive','Weekly'],['Device sync status','Officers, admin','Daily']].map(r=>[...r,`<button class="btn" ${R[role].exp?'':'disabled'}>CSV</button>`])),
+staff:()=>head('Teachers & tutors',chip('One active posting each'))+tbl(['Name','Role','TSC no.','Centre','Since'],[['Mary Achieng','ECDE teacher','XXXXXX','Sunrise ECDE','May 2025'],['P. Otieno','VTC tutor','XXXXXX','Example VTC','Jan 2024']]),
+users:()=>head('Users & roles','<button class="btn p">Add user</button>')+tbl(['User','Role','Scope','MFA','Status'],[['Grace M.','Teacher','Sunrise ECDE','PIN',chip('Active','o')],['J. Kamau','Sub-county officer','Sub-county C','On',chip('Active','o')],['A. Wekesa','County officer','County','On',chip('Active','o')],['T. Mwangi','Teacher','Kijani ECDE','PIN',chip('Locked','b')]])+`<p class="note">System admin manages accounts and devices but cannot view learner data.</p>`,
+devices:()=>head('Devices (MDM)',chip('Kiosk mode'))+tbl(['Device','Centre','App','Battery','Last sync',''],[['KD-014','Sunrise ECDE','v1.2','82%','Today 08:10',chip('Online','o')],['KD-021','Centre X','v1.1','14%','3 days ago',chip('Stale','b')]]),
+audit:()=>head('Audit log',chip('Who · what · when'))+tbl(['Time','User','Action','Record'],[['08:12','Grace M.','Create','Learner Amina W.'],['09:40','J. Kamau','Approve','Registration #2041'],['10:05','A. Wekesa','Export','Attendance CSV'],['10:30','IT Admin','Login','Web admin']])};
+Object.assign(D,{
+login:()=>head('Sign in & MFA',chip('All roles'))+`<div class="grid k2"><div class="card"><h3>1 · Sign in</h3><label>Username<input class="in" value="jkamau"></label><br><label>Password<input class="in" type="password" value="••••••••"></label><button class="big">Continue</button><p class="note">Locks after 5 failed tries. Field devices use a PIN and are bound to one centre.</p></div><div class="card"><h3>2 · MFA (officers)</h3><label>6-digit code by SMS or app<input class="in" value="482 913"></label><button class="big">Verify</button><p class="note">Then loads role permissions and scope, and writes the login to the audit log.</p></div></div>`,
+roles:()=>{const rs=['Teacher','Sub-county','County','Executive','Admin'];const m=[['Register learner','YNYNN'],['Verify registration','NYYNN'],['Record attendance, milk, uniform','YNNNN'],['View own centre','YYYYN'],['View sub-county','NYYYN'],['View whole county','NNYYN'],['Correct approved records','NYYNN'],['Export data','NNYNN'],['Manage users and devices','NNNNY'],['View audit log','NNYNY']];return head('Roles & permissions',chip('Least privilege'))+tbl(['Action',...rs],m.map(([a,q])=>[a,...[...q].map(c=>c==='Y'?chip('Yes','o'):chip('No'))]))},
+profile:()=>head('Learner profile',chip('Active','o')+'<button class="btn">Edit</button>')+`<div class="grid k2"><div class="card"><h3>Amina Wanjiru</h3><div class="li"><span>Learner ID</span><b>L-2026-00418</b></div><div class="li"><span>Centre · class</span><b>Sunrise · Baby class</b></div><div class="li"><span>Date of birth</span><b>14 Mar 2022</b></div><div class="li"><span>Wristband</span>${chip('NFC · active','o')}</div></div><div class="card"><h3>Guardian & consent</h3><div class="li"><span>Grace Wanjiru</span><b>07XX XXX XXX</b></div><div class="li"><span>Consent</span>${chip('Recorded','o')}</div><div class="li"><span>SMS opt-out</span><b>No</b></div></div><div class="card"><h3>Attendance, last 4 weeks</h3>${bars([['Week 1',100],['Week 2',80],['Week 3',60],['Week 4',100]])}</div><div class="card"><h3>Items issued</h3><div class="li"><span>Milk</span><b>21 of 24 days</b></div><div class="li"><span>Uniform</span>${chip('Size S · 12 Oct','o')}</div></div></div>`,
+uniform:()=>head('Uniform issue · Sunrise ECDE',chip('Receipt confirmed','o'))+`<div class="grid k4">${kpi('24','Beneficiaries')}${kpi('15','Issued')}${kpi('9','Pending')}${kpi('12','Size S stock')}</div><div class="card" style="margin-top:12px"><h3>Issue by learner</h3>`+tbl(['Learner','Entitlement','Size','Status',''],[['Amina W.','1 set','S',chip('Issued','o'),''],['Brian K.','1 set','M',chip('Pending','w'),'<button class="btn p">Issue</button>'],['Faith A.','Not listed','',chip('Not eligible','b'),'']])+`</div>`,
+beneficiary:()=>head('Uniform beneficiaries & dispatch','<button class="btn p">Upload list (CSV)</button>')+`<div class="steps"><span>Uploaded</span><span>Allocated</span><span class="on">Dispatched</span><span>Received</span><span>Issued</span></div>`+tbl(['Sub-county','Beneficiaries','Allocated','Dispatched','Received','Issued'],[['A','4,200','4,200','4,200','4,050','3,100'],['B','3,900','3,900','3,000','2,400','1,800'],['C','4,380','4,000','1,200','600','210']])+`<p class="note">Gaps and balances feed the dashboard.</p>`,
+vtc:()=>head('VTC students',chip('Separate from ECDE learners'))+`<div class="f"><label>Student name<input class="in" value="Peter Otieno"></label><label>National ID<input class="in" placeholder="XXXXXXXX"></label><label>Institution<input class="in" value="Example VTC"></label><label>Course<input class="in" value="Electrical installation"></label><label>Level and year<input class="in" value="Level 5 · Year 1"></label><label>Capitation status<input class="in" value="Approved"></label></div><div class="bar" style="margin:12px 0"><button class="btn p">Save student</button></div>`+tbl(['Student','Course','Status'],[['Peter Otieno','Electrical installation',chip('Active','o')],['Jane Atieno','Plumbing',chip('Deferred','w')],['S. Mutai','Welding',chip('Completed')]]),
+wristbands:()=>head('NFC wristbands','<button class="btn p">Receive batch</button>')+`<div class="grid k4">${kpi('2,000','In stock')}${kpi('11,900','In use')}${kpi('63','Blocked')}${kpi('18','Awaiting tag')}</div><div class="card" style="margin-top:12px"><h3>Tag register</h3>`+tbl(['Tag UID','Learner','Status','Action'],[['04:A2…9C','Amina W.',chip('In use','o'),'<button class="btn d">Block</button>'],['04:B7…11','Brian K.',chip('Lost','b'),'<button class="btn">Assign new</button>'],['04:C1…5E','Unassigned',chip('In stock'),'<button class="btn">Assign</button>']])+`</div>`,
+sms:()=>head('SMS events',chip('Sender ID: applied','w'))+`<div class="grid k4">${kpi('92%','Delivered')}${kpi('1,240','Sent this week')}${kpi('38','Failed')}${kpi('56','Opt-outs')}</div><div class="card" style="margin-top:12px">`+tbl(['Event','Recipient','Message','Status'],[['Learner registered','Guardian','Amina is registered… Reply STOP to opt out',chip('On','o')],['Absent 3 days','Guardian','Amina has missed 3 days…',chip('On','o')],['Uniform issued','Guardian','Amina received a school uniform…',chip('On','o')],['Registration returned','Teacher','Registration for Amina W. was returned…',chip('On','o')],['Milk stock low','Sub-county officer','…has 1 day of milk left',chip('On','o')],['No sync 3 days','Sub-county officer','The device… has not synced',chip('On','o')]])+`</div>`,
+centres:()=>head('Centres',chip('Sub-county C'))+tbl(['Centre','Attendance','Milk stock','Last sync','Pending'],[['Sunrise ECDE','92%',chip('OK','o'),'Today','0'],['Kijani ECDE','71%',chip('Low','w'),'Yesterday','12'],['Centre X','—',chip('OK','o'),chip('3 days','b'),'0'],['Centre Y','64%',chip('Stock-out','b'),'Today','4']]),
+corr:()=>head('Corrections',chip('Append-only records'))+tbl(['Record','Original','Correction','By','Action'],[['Attendance 12 Oct','Absent','Present','G. Mwangi','<button class="btn p">Approve</button> <button class="btn d">Reject</button>'],['Milk 13 Oct','21 served','22 served','G. Mwangi','<button class="btn p">Approve</button> <button class="btn d">Reject</button>']])+`<p class="note">An approved correction is a new record pointing to the original; the earlier one stays in the audit log.</p>`,
+provision:()=>head('Device provisioning',chip('Kiosk mode'))+tbl(['Step','Status'],[['Factory reset, QR enrolment as device owner',chip('Done','o')],['MDM installs app, locks kiosk mode',chip('Done','o')],['Assign device to a centre',chip('In progress','w')],['Field test with real tags',chip('Pending')],['Dispatch to centre',chip('Pending')]])+`<p class="note">MDM then tracks version, battery and last sync.</p>`,
+pilot:()=>head('Training & pilot',chip('15 to 20 centres','w'))+`<div class="grid k2"><div class="card"><h3>Training</h3>`+tbl(['Stage','Who','Length'],[['Train the trainers','County ICT','3 days'],['Officer training','Sub-county officers','2 days'],['Teacher training','Pilot centres','1 day']])+`</div><div class="card"><h3>Exit criteria (sample)</h3>${bars([['Sync within 48h',84],['Duplicate check',98],['SMS delivered',92],['Under 5 min/class',70]])}</div></div>`});
+const phoneScreens={
+att:()=>`<div class="tap"><b>Tap wristband</b>or scan QR card</div><div class="li"><span>Amina W.</span>${chip('Present 8:02','o')}</div><div class="li"><span>Brian K.</span>${chip('Present · Milk','o')}</div><div class="li"><span>Unknown tag</span>${chip('Not registered','b')}</div><button class="big" style="background:var(--pri2);color:var(--pri)">Search by name</button>`,
+milk:()=>`<div class="grid k4" style="grid-template-columns:1fr 1fr">${kpi('24 L','Delivered')}${kpi('21 / 24','Served')}${kpi('3 L','Left')}${kpi('Low','Tomorrow')}</div><div class="li"><span>Received by Head teacher</span>${chip('✓','o')}</div><button class="big">Submit day report</button><button class="big" style="background:none;color:var(--bad);border:1px solid var(--line)">Report short delivery</button>`,
+uni:()=>`<div class="card"><b>Amina W.</b><br><span class="note">Entitlement: 1 set, not yet issued</span></div><p class="note">Size</p><div class="sz"><button>S</button><button class="on">M</button><button>L</button></div><p class="note">Centre stock, size M: 9</p><button class="big">Confirm issue</button>`,
+sync:()=>`<div class="card kpi"><b>14</b><span>records queued · Offline</span></div><div class="li"><span>Last sync</span><b>Yesterday 16:40</b></div><div class="li"><span>Device</span><b>KD-014 · bound to Sunrise</b></div><button class="big">Sync now</button>`,
+alerts:()=>al('Centre X: no sync for 3 days','w','Sync','Follow up')+al('Centre Y: milk stock-out','b','Urgent','Dispatch')+al('Sub-county C: 210 awaiting verification','','Pending','Open'),
+verify:()=>`<div class="card"><b>Amina Wanjiru</b><br><span class="note">Sunrise ECDE · No duplicate</span><button class="big">Approve</button><button class="big" style="background:none;color:var(--bad);border:1px solid var(--line)">Return</button></div>`,
+centres:()=>bars([['Sunrise',92],['Sunset',88],['Kijani',71],['Tumaini',64]]),
+dash:()=>`<div class="grid" style="grid-template-columns:1fr 1fr">${kpi('12,480','Learners')}${kpi('86%','Attendance')}${kpi('94%','Milk')}${kpi('61%','Uniforms')}</div><div class="card" style="margin-top:12px">${bars([['Sub-county A',88],['Sub-county B',81],['Sub-county C',69]])}</div>`,
+devices:()=>al('KD-014 · Sunrise · 82%','o','Online')+al('KD-021 · Centre X · 14%','b','Stale','Lock'),
+users:()=>al('T. Mwangi · Teacher','b','Locked','Unlock')+al('J. Kamau · Officer','o','Active')};
+Object.assign(phoneScreens,{
+login:()=>`<div style="text-align:center;padding:20px 0"><b style="font-size:22px;color:var(--pri)">NCEMIS</b><p class="note">Sunrise ECDE · KD-014</p></div><label>Enter PIN<input class="in" type="password" value="••••"></label><button class="big">Unlock</button><button class="big" style="background:none;color:var(--pri);border:1px solid var(--line)">Use biometric</button>`,
+reg:()=>`<div class="steps"><span>1</span><span class="on">2</span><span>3</span><span>4</span></div><label>Learner name<input class="in" value="Amina Wanjiru"></label><br><label>Guardian phone<input class="in" placeholder="07XX XXX XXX"></label><p><label style="display:flex;gap:8px;color:var(--ink)"><input type="checkbox" checked> Guardian consents</label></p>${chip('Duplicate check: no match','o')}<button class="big">Submit for verification</button>`});
+R.teacher.nav=[['login','Sign in'],['register','Register learner'],['learners','Learners'],['profile','Learner profile'],['milk','Milk register'],['uniform','Uniform issue'],['reports','Centre reports']];
+R.teacher.m=[['login','Login'],['att','Attend'],['milk','Milk'],['uni','Uniform'],['reg','Register'],['sync','Sync']];
+R.sub.nav=[['dash','Dashboard'],['centres','Centres'],['verify','Verification'],['corr','Corrections'],['sms','SMS alerts'],['reports','Reports']];
+R.county.nav=[['dash','Dashboard'],['verify','Verification'],['register','Registration'],['vtc','VTC students'],['staff','Teachers & tutors'],['beneficiary','Uniform dispatch'],['wristbands','NFC wristbands'],['sms','SMS'],['corr','Corrections'],['reports','Reports & export'],['audit','Audit log'],['pilot','Training & pilot']];
+R.admin.nav=[['login','Sign in & MFA'],['users','Users'],['roles','Roles & permissions'],['devices','Devices'],['provision','Provisioning'],['sms','SMS settings'],['audit','Audit log']];
+function render(){
+const r=R[role];
+$('#roles').innerHTML=Object.entries(R).map(([k,v])=>`<button data-r="${k}" class="${k===role?'on':''}">${v.n}</button>`).join('');
+$('#dev').innerHTML=`<button data-d="d" class="${dev==='d'?'on':''}">Desktop</button><button data-d="m" class="${dev==='m'?'on':''}">Mobile</button>`;
+let h='';
+if(dev==='d'){const s=scr[role]||r.nav[0][0];
+h=`<div class="app"><div class="side"><h4>${r.n}</h4>${r.nav.map(([k,l])=>`<button data-s="${k}" class="${k===s?'on':''}">${l}</button>`).join('')}</div><div class="main"><div class="bar" style="justify-content:flex-end;margin-bottom:6px">${chip('Scope: '+r.s)}${chip(r.u+' · '+r.n)}</div>${D[s]()}</div></div>`;}
+else{const s=mt[role]||r.m[0][0];
+h=`<p class="lbl">${r.n} on Android. ${role==='teacher'?'Offline-first kiosk app, locked to one centre.':'Field view of the same data.'}</p><div class="mob"><div class="phone"><div class="ph"><small>${r.s}</small><br><b>${r.m.find(x=>x[0]===s)[1]}</b> ${role==='teacher'?'· Baby class 18/24':''}</div><div class="pb">${phoneScreens[s]()}</div><div class="nav">${r.m.map(([k,l])=>`<button data-m="${k}" class="${k===s?'on':''}">${l}</button>`).join('')}</div></div></div>`;}
+$('#root').innerHTML=h;}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+if(b.dataset.r){role=b.dataset.r}else if(b.dataset.d){dev=b.dataset.d}else if(b.dataset.s){scr[role]=b.dataset.s}else if(b.dataset.m){mt[role]=b.dataset.m}else return;render();});
+render();
+</script></body></html>
